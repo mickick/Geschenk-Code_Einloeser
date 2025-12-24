@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Geschenk‑Code einlösen</title>
+    <style>
+        body {font-family: Arial, sans-serif; max-width: 400px; margin: 2rem auto;}
+        input, button {width: 100%; padding: 0.5rem; margin-top: 0.5rem;}
+        /* Eingabefeld zwingt Großbuchstaben */
+        #code {text-transform: uppercase;}
+        #msg {margin-top: 1rem; font-weight: bold;}
+    </style>
+</head>
+<body>
+
+<h2>Geschenk‑Code einlösen</h2>
+
+<label for="code">Code eingeben:</label>
+<input type="text" id="code" placeholder="z. B. ABCD‑1234">
+
+<button id="redeemBtn" type="button">Einlösen</button>
+
+<div id="msg"></div>
+
+<script>
+    const validCodes = {
+        "ZKLI-3579": "1 einfache mod programmieren und ausprobieren und selbstgemachte Currywurst",
+        "FXYE-5687": "Selbstgemachte Bildschirmteilungsmod und andere mods spielen mit Amatus und selbstgemachte Currywurst",
+        "FENT-5798": "Vorstellung Was ist Minecraft und selbstgemachte Currywurst","UCFU-6805": "Cinemax mit insgesamt 5 Personen freie Filmwahl"
+    };
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const btn   = document.getElementById('redeemBtn');
+        const input = document.getElementById('code');
+        const msg   = document.getElementById('msg');
+
+        btn.addEventListener('click', () => {
+            // Eingabe wird bereits visuell großgeschrieben,
+            // hier zusätzlich sicherheitshalber in Großbuchstaben umwandeln
+            const code = input.value.trim().toUpperCase();
+
+            if (!code) {
+                msg.textContent = "Bitte einen Code eingeben.";
+                msg.style.color = "red";
+                return;
+            }
+
+            if (validCodes[code]) {
+                msg.textContent = `Code erfolgreich! Du erhältst: ${validCodes[code]}.`;
+                msg.style.color = "green";
+                delete validCodes[code];
+            } else {
+                msg.textContent = "Ungültiger oder bereits eingelöster Code.";
+                msg.style.color = "red";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>
